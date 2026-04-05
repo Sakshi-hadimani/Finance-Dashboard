@@ -14,6 +14,7 @@ Filter and manage financial data
 The project is built using HTML, CSS, JavaScript, and Tailwind CSS, focusing on frontend design and dynamic UI behavior.
 
 🚀 Features
+
 🔹 1. Role-Based Access
 Admin Mode :
 Add, edit, and delete transactions
