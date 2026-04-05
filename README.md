@@ -27,14 +27,19 @@ User role is stored using browser storage
 🔹 2. Dashboard Analytics
 
 Displays total balance, income, and expenses
+
 Savings rate calculation
+
 Monthly Income vs Expense chart
+
 Category-wise spending visualization
+
 Recent transactions preview
 
 🔹 3. Transaction Management
 
 Add, edit, and delete transactions
+
 Modal-based form UI for smooth interaction
 
 🔹 4. Advanced Filtering & Sorting
@@ -48,6 +53,7 @@ Category
 
 Sort by:
 Date (Newest / Oldest)
+
 Amount (High → Low / Low → High)
 
 🔹 5. Insights Page
