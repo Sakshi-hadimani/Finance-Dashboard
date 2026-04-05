@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FinTrack - Transactions</title>
+  <link rel="stylesheet" href="./output.css">
+  <script src="https://kit.fontawesome.com/d1b0652355.js" crossorigin="anonymous"></script>
+</head>
+
+<body class="bg-gray-50 text-gray-800">
+
+  <!-- ===== NAVBAR===== -->
+  <header class="sticky top-0 z-50 bg-white border-b border-gray-200 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between py-4">
+
+        <!-- LEFT: Logo -->
+        <div class="flex items-center">
+          <h1 class="text-xl font-bold text-purple-600">
+            FinTrack
+          </h1>
+        </div>
+
+        <!-- MIDDLE: Desktop Navigation -->
+        <nav class="hidden md:flex gap-1 bg-gray-100 rounded-xl p-1">
+
+          <!-- Dashboard-->
+          <a href="index.html" class="flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium text-gray-500 hover:text-gray-700">
+            Dashboard
+          </a>
+
+          <!-- Transactions-->
+          <a href="transactions.html" class="flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium bg-white shadow-sm text-blue-600">
+            Transactions
+          </a>
+
+          <!-- Insights-->
+          <a href="insights.html" class="flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium text-gray-500 hover:text-gray-700">
+            Insights
+          </a>
+        </nav>
+
+        <!-- RIGHT: Role, Dark Mode, Hamburger -->
+        <div class="flex items-center gap-3">
+          <div class="hidden sm:flex items-center gap-2">
+            <span class="text-xs text-gray-500">Role:</span>
+            <select id="roleSwitcher" class="text-sm rounded-lg px-3 py-1.5 border border-gray-300 bg-white text-gray-700 focus:outline-none cursor-pointer">
+              <option value="admin">Admin</option>
+              <option value="viewer">Viewer</option>
+            </select>
+          </div>
+
+          <button id="hamburgerBtn" class="p-2 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-600 md:hidden" title="Menu">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+        </div>
+
+      </div>
+
+      <!-- MOBILE MENU -->
+      <div id="mobileMenu" class="hidden md:hidden pb-4">
+        <nav class="flex flex-col gap-1 bg-gray-100 rounded-xl p-1">
+          <!-- Dashboard (INACTIVE) -->
+          <a href="index.html" class="flex items-center gap-2 px-4 py-3 rounded-lg text-sm font-medium text-gray-500 hover:text-gray-700 hover:bg-white">
+            Dashboard
+          </a>
+          <!-- Transactions (ACTIVE) -->
+          <a href="transactions.html" class="flex items-center gap-2 px-4 py-3 rounded-lg text-sm font-medium bg-white shadow-sm text-blue-600">
+            Transactions
+          </a>
+          <!-- Insights (INACTIVE) -->
+          <a href="insights.html" class="flex items-center gap-2 px-4 py-3 rounded-lg text-sm font-medium text-gray-500 hover:text-gray-700 hover:bg-white">
+            Insights
+          </a>
+        </nav>
+
+        <div class="flex items-center gap-2 mt-3 px-2">
+          <span class="text-xs text-gray-500">Role:</span>
+          <select id="roleSwitcherMobile" class="text-sm rounded-lg px-3 py-1.5 border border-gray-300 bg-white text-gray-700 focus:outline-none cursor-pointer flex-1">
+            <option value="admin">Admin</option>
+            <option value="viewer">Viewer</option>
+          </select>
+        </div>
+      </div>
+
+    </div>
+  </header>
+  <!-- ===== NAVBAR ENDS ===== -->
+
+
+  <!-- Role Badge -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4">
+    <div id="roleBadge" class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-700">
+      Admin Mode — You can add and edit transactions
+    </div>
+  </div>
+
+
+  <!-- 
+    ==============================
+    MAIN CONTENT: TRANSACTIONS
+    ==============================
+  -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+
+    <!-- Header + Add Button -->
+    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-6">
+      <div>
+        <h2 class="text-2xl font-bold text-gray-800">Transactions</h2>
+        <p class="text-sm text-gray-500">
+          <span id="transactionCount">0</span> transactions found
+        </p>
+      </div>
+
+      <div class="flex gap-2">
+        <button id="addTransactionBtn" class="flex items-center gap-2 px-4 py-2 bg-purple-600 text-white rounded-xl text-sm font-medium hover:bg-purple-700 shadow-sm hover:shadow-md transition-all">
+          <i class="fa-solid fa-plus"></i>
+          Add Transaction
+        </button>
+      </div>
+    </div>
+
+    <!-- Filters -->
+    <div class="bg-white rounded-2xl border border-gray-100 p-4 shadow-sm mb-6">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+
+        <!-- Search -->
+        <div class="relative">
+          <i class="fa-brands fa-sistrix w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+          <input type="text" id="searchInput" placeholder="Search transactions..."
+            class="w-full pl-10 pr-4 py-2 rounded-xl border border-gray-300 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+        </div>
+
+        <!-- Type Filter -->
+        <select id="typeFilter" class="w-full px-4 py-2 rounded-xl border border-gray-300 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer">
+          <option value="all">All Types</option>
+          <option value="income">Income Only</option>
+          <option value="expense">Expense Only</option>
+        </select>
+
+        <!-- Category Filter -->
+        <select id="categoryFilter" class="w-full px-4 py-2 rounded-xl border border-gray-300 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer">
+          <option value="all">All Categories</option>
+        </select>
+
+        <!-- Sort -->
+        <select id="sortFilter" class="w-full px-4 py-2 rounded-xl border border-gray-300 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer">
+          <option value="date-desc">Newest First</option>
+          <option value="date-asc">Oldest First</option>
+          <option value="amount-desc">Amount: High to Low</option>
+          <option value="amount-asc">Amount: Low to High</option>
+        </select>
+
+      </div>
+    </div>
+
+    <!-- Transactions List -->
+    <div id="transactionsList" class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+      <!-- JavaScript will fill this -->
+    </div>
+
+  </main>
+
+
+  <div id="transactionModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4">
+
+    <div id="modalBackdrop" class="absolute inset-0 bg-black/50"></div>
+
+    <div class="relative w-full max-w-md bg-white rounded-2xl shadow-2xl p-6">
+
+      <!-- Modal Title -->
+      <h2 id="modalTitle" class="text-xl font-bold text-gray-800 mb-5">Add Transaction</h2>
+
+      <!-- Modal Form -->
+      <form id="modalForm" class="space-y-4">
+
+        <!-- Description Field -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">
+            Description
+          </label>
+          <input 
+            type="text" 
+            id="formDescription" 
+            placeholder="e.g. Grocery Shopping"
+            required
+            class="w-full px-4 py-2.5 rounded-xl border border-gray-300 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+        </div>
+
+        <!-- Amount Field -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">
+            Amount (₹)
+          </label>
+          <input 
+            type="number" 
+            id="formAmount" 
+            placeholder="e.g. 5000"
+            min="1"
+            required
+            class="w-full px-4 py-2.5 rounded-xl border border-gray-300 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+        </div>
+
+        <!-- Date Field -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">
+            Date
+          </label>
+          <input 
+            type="date" 
+            id="formDate"
+            required
+            class="w-full px-4 py-2.5 rounded-xl border border-gray-300 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+        </div>
+
+        <!-- Type Field (Income or Expense) -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">
+            Type
+          </label>
+          <select 
+            id="formType"
+            required
+            class="w-full px-4 py-2.5 rounded-xl border border-gray-300 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer"
+          >
+            <option value="expense">Expense (Money Out)</option>
+            <option value="income">Income (Money In)</option>
+          </select>
+        </div>
+
+        <!-- Category Field -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">
+            Category
+          </label>
+          <select 
+            id="formCategory"
+            required
+            class="w-full px-4 py-2.5 rounded-xl border border-gray-300 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer"
+          >
+            <option value="Food"> Food</option>
+            <option value="Entertainment"> Entertainment</option>
+            <option value="Utilities"> Utilities</option>
+            <option value="Transport"> Transport</option>
+            <option value="Shopping"> Shopping</option>
+            <option value="Health"> Health</option>
+            <option value="Salary"> Salary</option>
+            <option value="Freelance"> Freelance</option>
+            <option value="Investment"> Investment</option>
+          </select>
+        </div>
+
+        <!-- Buttons Row -->
+        <div class="flex gap-3 pt-2">
+          <!-- Cancel Button -->
+          <button 
+            type="button" 
+            id="cancelModalBtn"
+            class="flex-1 px-4 py-2.5 rounded-xl border border-gray-300 text-gray-700 text-sm font-medium hover:bg-gray-100 transition-colors"
+          >
+            Cancel
+          </button>
+
+          <!-- Save Button -->
+          <button 
+            type="submit"
+            id="saveModalBtn"
+            class="flex-1 px-4 py-2.5 rounded-xl bg-purple-600 text-white text-sm font-medium hover:bg-purple-700 transition-all"
+          >
+            Add Transaction
+          </button>
+        </div>
+
+      </form>
+    </div>
+
+  </div>
+  <!-- ===== MODAL ENDS ===== -->
+
+
+  <!-- JS Files -->
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+
+</body>
+</html>

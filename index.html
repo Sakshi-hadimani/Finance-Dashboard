@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FinTrack - Dashboard</title>
+  <link rel="stylesheet" href="./output.css">
+  <script src="https://kit.fontawesome.com/d1b0652355.js" crossorigin="anonymous"></script>
+</head>
+
+<body class="bg-gray-50 text-gray-800">
+
+  <!-- ===== NAVBAR ===== -->
+  <header class="sticky top-0 z-50 bg-white border-b border-gray-200 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between py-4">
+
+        <!-- LEFT: Logo -->
+        <div class="flex items-center">
+          <h1 class="text-xl font-bold text-purple-600">
+            FinTrack
+          </h1>
+        </div>
+
+
+        <nav class="hidden md:flex gap-1 bg-gray-100 rounded-xl p-1">
+
+          <!-- Dashboard (ACTIVE on this page) -->
+          <a href="index.html" class="flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium bg-white shadow-sm text-blue-600">
+            Dashboard
+          </a>
+
+          <!-- Transactions (INACTIVE on this page) -->
+          <a href="transactions.html" class="flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium text-gray-500 hover:text-gray-700">
+            Transactions
+          </a>
+
+          <!-- Insights (INACTIVE on this page) -->
+          <a href="insights.html" class="flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium text-gray-500 hover:text-gray-700">
+            Insights
+          </a>
+        </nav>
+
+        <!-- RIGHT: Role, Dark Mode, Hamburger -->
+        <div class="flex items-center gap-3">
+
+          <div class="hidden sm:flex items-center gap-2">
+            <span class="text-xs text-gray-500">Role:</span>
+            <select id="roleSwitcher" class="text-sm rounded-lg px-3 py-1.5 border border-gray-300 bg-white text-gray-700 focus:outline-none cursor-pointer">
+              <option value="admin">Admin</option>
+              <option value="viewer">Viewer</option>
+            </select>
+          </div>
+
+          <button id="hamburgerBtn" class="p-2 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-600 md:hidden" title="Menu">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+        </div>
+
+      </div>
+
+      <!-- MOBILE MENU -->
+      <div id="mobileMenu" class="hidden md:hidden pb-4">
+        <nav class="flex flex-col gap-1 bg-gray-100 rounded-xl p-1">
+          <!-- Dashboard (ACTIVE) -->
+          <a href="index.html" class="flex items-center gap-2 px-4 py-3 rounded-lg text-sm font-medium bg-white shadow-sm text-blue-600">
+            Dashboard
+          </a>
+          <!-- Transactions (INACTIVE) -->
+          <a href="transactions.html" class="flex items-center gap-2 px-4 py-3 rounded-lg text-sm font-medium text-gray-500 hover:text-gray-700 hover:bg-white">
+            Transactions
+          </a>
+          <!-- Insights (INACTIVE) -->
+          <a href="insights.html" class="flex items-center gap-2 px-4 py-3 rounded-lg text-sm font-medium text-gray-500 hover:text-gray-700 hover:bg-white">
+            Insights
+          </a>
+        </nav>
+
+        <!-- Mobile Role Switcher -->
+        <div class="flex items-center gap-2 mt-3 px-2">
+          <span class="text-xs text-gray-500">Role:</span>
+          <select id="roleSwitcherMobile" class="text-sm rounded-lg px-3 py-1.5 border border-gray-300 bg-white text-gray-700 focus:outline-none cursor-pointer flex-1">
+            <option value="admin">Admin</option>
+            <option value="viewer">Viewer</option>
+          </select>
+        </div>
+      </div>
+
+    </div>
+  </header>
+  <!-- ===== NAVBAR ENDS ===== -->
+
+
+  <!-- Role Badge -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4">
+    <div id="roleBadge" class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-700">
+      Admin Mode — You can add and edit transactions
+    </div>
+  </div>
+
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+
+    <!-- Summary Cards -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+
+      <!-- Card 1: Total Balance -->
+      <div class="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm hover:shadow-md transition-shadow">
+        <span class="text-sm text-gray-500">Total Balance</span>
+        <p id="balanceAmount" class="text-2xl font-bold text-blue-600">₹0</p>
+        <p class="text-xs text-gray-400 mt-1">Total money available</p>
+      </div>
+
+      <!-- Card 2: Total Income -->
+      <div class="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm hover:shadow-md transition-shadow">
+        <span class="text-sm text-gray-500">Total Income</span>
+        <p id="incomeAmount" class="text-2xl font-bold text-green-600">₹0</p>
+        <p class="text-xs text-gray-400 mt-1">Money came in</p>
+      </div>
+
+      <!-- Card 3: Total Expenses -->
+      <div class="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm hover:shadow-md transition-shadow">
+        <span class="text-sm text-gray-500">Total Expenses</span>
+        <p id="expenseAmount" class="text-2xl font-bold text-red-500">₹0</p>
+        <p class="text-xs text-gray-400 mt-1">Money went out</p>
+      </div>
+
+      <!-- Card 4: Savings Rate -->
+      <div class="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm hover:shadow-md transition-shadow">
+        <span class="text-sm text-gray-500">Savings Rate</span>
+        <p id="savingsRate" class="text-2xl font-bold text-purple-600">0%</p>
+        <p class="text-xs text-gray-400 mt-1">Of income saved</p>
+      </div>
+
+    </div>
+
+    <!-- 
+      ===== CHARTS SECTION =====
+      Two charts side by side on laptop
+      Stacked on mobile
+    -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+
+      <!-- Chart 1: Monthly Income vs Expense -->
+      <div class="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm">
+        <h3 class="text-lg font-semibold text-gray-800 mb-2">Monthly Income vs Expenses</h3>
+
+        <!-- Legend -->
+        <div class="flex items-center gap-4 mb-4">
+          <div class="flex items-center gap-1.5">
+            <div class="w-3 h-3 rounded-full bg-green-500"></div>
+            <span class="text-xs text-gray-500">Income</span>
+          </div>
+          <div class="flex items-center gap-1.5">
+            <div class="w-3 h-3 rounded-full bg-red-400"></div>
+            <span class="text-xs text-gray-500">Expense</span>
+          </div>
+        </div>
+
+        <!-- 
+          Chart container
+          JavaScript fills this with bars
+          border-b and border-l gives it an axis look
+        -->
+        <div id="dashboardMonthlyChart" class="flex items-end gap-2 h-48 border-b border-l border-gray-200 px-2">
+        </div>
+      </div>
+
+      <!-- Chart 2: Spending by Category -->
+      <div class="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm">
+        <h3 class="text-lg font-semibold text-gray-800 mb-4">Spending by Category</h3>
+
+        <!-- JavaScript fills this with progress bars -->
+        <div id="dashboardCategoryChart">
+        </div>
+      </div>
+
+    </div>
+    <!-- ===== CHARTS SECTION ENDS ===== -->
+
+    <!-- Recent Transactions -->
+    <div class="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-lg font-semibold text-gray-800">Recent Transactions</h3>
+        <a href="transactions.html" class="text-sm text-blue-600 hover:text-blue-700 font-medium flex items-center gap-1">
+          View All
+          <i class="fa-solid fa-chevron-right"></i>
+        </a>
+      </div>
+      <div id="recentTransactionsList">
+      </div>
+    </div>
+
+  </main>
+
+
+  <!-- JS Files -->
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+
+</body>
+</html>
