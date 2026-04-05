@@ -7,8 +7,11 @@ This is a responsive Finance Dashboard UI designed to help users visualize and m
 It provides an interactive interface to:
 
 Track transactions
+
 Analyze spending patterns
+
 View insights and summaries
+
 Filter and manage financial data
 
 The project is built using HTML, CSS, JavaScript, and Tailwind CSS, focusing on frontend design and dynamic UI behavior.
